@@ -1,5 +1,6 @@
 from fastapi import FastAPI
 from fastapi.encoders import jsonable_encoder
+from fastapi.middleware.cors import CORSMiddleware
 import urllib.parse
 import json
 import pymongo
@@ -9,6 +10,16 @@ print(myclient.test)
 db = myclient["organchaintest"]
 
 app = FastAPI()
+
+origins = ["*"]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 
 @app.get("/", tags=["Root"])
